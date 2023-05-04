@@ -18,7 +18,7 @@
   const sendBtn = document.getElementById('sendBtn');
   const chatArea = document.getElementById('chatArea');
 
-  const socket = new WebSocket('ws://simplechat-nodejs-production.up.railway.app:8080');
+  const socket = new WebSocket('wss://simplechat-nodejs-production.up.railway.app');
 
   socket.onopen = () => {
     console.log('Connected to the chat server');
