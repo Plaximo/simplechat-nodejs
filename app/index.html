@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node.js WebSocket Chat App</title>
+  <style>
+    /* Add your CSS styling here */
+  </style>
+</head>
+<body>
+<div id="chatArea"></div>
+<input type="text" id="chatInput" placeholder="Type your message...">
+<button id="sendBtn">Send</button>
+
+<script>
+  const chatInput = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('sendBtn');
+  const chatArea = document.getElementById('chatArea');
+
+  const socket = new WebSocket('ws://localhost:8080');
+
+  socket.onopen = () => {
+    console.log('Connected to the chat server');
+  };
+
+  socket.onmessage = (event) => {
+    const message = document.createElement('p');
+    message.innerText = event.data;
+    chatArea.appendChild(message);
+  };
+
+  socket.onclose = () => {
+    console.log('Disconnected from the chat server');
+  };
+
+  sendBtn.addEventListener('click', () => {
+    const message = chatInput.value.trim();
+    if (!message) return;
+
+    socket.send(message);
+    chatInput.value = '';
+  });
+</script>
+</body>
+</html>
